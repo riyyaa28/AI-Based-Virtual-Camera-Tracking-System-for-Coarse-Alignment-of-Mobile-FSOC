@@ -22,3 +22,6 @@ class PerformanceLogger:
             ]
         )
         self.f.flush()
+
+    def close(self):
+        self.f.close()

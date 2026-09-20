@@ -7,7 +7,9 @@ class YoloBeaconDetector:
         self.conf_threshold = conf_threshold
 
     def detect(self, frame):
-        results = self.model.predict(frame, verbose=False, conf=self.conf_threshold)[0]
+        results = self.model.predict(
+            frame, imgsz=320, verbose=False, conf=self.conf_threshold
+        )[0]
         best_box, best_conf = None, 0.0
         for box in results.boxes:
             cls_id = int(box.cls[0])
