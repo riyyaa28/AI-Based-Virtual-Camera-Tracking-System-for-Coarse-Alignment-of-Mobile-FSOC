@@ -1,0 +1,7 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+numpy>=1.24
+opencv-python>=4.8
+pydantic>=2.7
+# Optional for the YOLO detector selection (also needed by the original desktop UI):
+# ultralytics>=8.3

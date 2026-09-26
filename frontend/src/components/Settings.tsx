@@ -1,0 +1,11 @@
+import type { ControlMessage, DeepPartial, SimulationConfig, SimulationState } from '../types/simulation'
+
+export function Settings({ state, send }: { state: SimulationState; send: (message: ControlMessage) => void }) {
+  const c = state.config
+  const patch = (config: DeepPartial<SimulationConfig>) => send({ action: 'configure', config })
+  return <section className="settings-grid">
+    <article className="panel settings-card"><h2>Camera and alignment</h2><label>Horizontal FOV <input type="number" min="8" max="80" value={c.camera.fov_horizontal} onChange={(e) => patch({ camera: { fov_horizontal: Number(e.target.value) } })} />°</label><label>Alignment threshold <input type="number" min="0.2" max="8" step="0.1" value={c.tracking.alignment_threshold} onChange={(e) => patch({ tracking: { alignment_threshold: Number(e.target.value) } })} />°</label><label>Stable duration <input type="number" min="0.2" max="10" step="0.1" value={c.tracking.stable_duration} onChange={(e) => patch({ tracking: { stable_duration: Number(e.target.value) } })} />s</label></article>
+    <article className="panel settings-card"><h2>Environment and LOS</h2><label className="toggle-row">Enable obstacle <input type="checkbox" checked={c.environment.obstacle.enabled} onChange={(e) => patch({ environment: { obstacle: { enabled: e.target.checked } } })} /></label><label>Atmospheric attenuation <input type="number" min="0" max="1" step="0.01" value={c.environment.atmospheric_attenuation} onChange={(e) => patch({ environment: { atmospheric_attenuation: Number(e.target.value) } })} /></label><p>Obstacle LOS is calculated against the live line segment between UAV 1 and UAV 2.</p></article>
+    <article className="panel settings-card"><h2>Simulation</h2><label>Target amplitude <input type="number" min="0.2" max="3" step="0.1" value={c.target.amplitude} onChange={(e) => patch({ target: { amplitude: Number(e.target.value) } })} /></label><label>Target velocity <input type="number" min="0.2" max="3" step="0.1" value={c.target.velocity} onChange={(e) => patch({ target: { velocity: Number(e.target.value) } })} />×</label><p>Changes are sent through WebSocket and Python remains authoritative for all target motion and gimbal physics.</p></article>
+  </section>
+}

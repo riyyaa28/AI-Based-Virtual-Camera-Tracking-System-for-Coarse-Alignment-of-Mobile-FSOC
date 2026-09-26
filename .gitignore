@@ -1,8 +1,11 @@
 venv/
+.venv/
 __pycache__/
 *.pyc
 dist/
 build/
+frontend/node_modules/
+frontend/dist/
 *.spec
 runs/
 performance_log.csv
